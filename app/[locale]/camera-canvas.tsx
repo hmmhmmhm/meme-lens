@@ -1,4 +1,7 @@
+'use client';
+
 import React from 'react';
+import { useTranslations } from 'next-intl';
 
 interface CameraCanvasProps {
   displayImage: string;
@@ -31,6 +34,7 @@ export function CameraCanvas({
   onTouchEnd,
   size,
 }: CameraCanvasProps) {
+  const t = useTranslations();
   return (
     <div 
       ref={canvasRef}
@@ -71,7 +75,7 @@ export function CameraCanvas({
         ) : (
           <img
             src={displayImage}
-            alt="User Character"
+            alt={t('userCharacter')}
             className="w-full h-full object-cover"
             style={{
               transform: `translate(${imagePosition.x}px, ${imagePosition.y}px) scale(${imageScale})`,
@@ -85,7 +89,7 @@ export function CameraCanvas({
       {/* Cover Image (Middle Layer) */}
       <img
         src={`/ios-26-camera-${isDarkTheme ? 'dark' : 'light'}-cover.webp`}
-        alt="Camera Cover"
+        alt={t('cameraCover')}
         className="absolute inset-0 w-full h-full object-cover pointer-events-none"
         style={{ opacity: 1, zIndex: 2, borderRadius: '22.37%' }}
       />
@@ -93,7 +97,7 @@ export function CameraCanvas({
       {/* Lens Image (Top Layer) */}
       <img
         src={`/ios-26-camera-${isDarkTheme ? 'dark' : 'light'}-lens.webp`}
-        alt="Camera Lens"
+        alt={t('cameraLens')}
         className="absolute inset-0 w-full h-full object-cover pointer-events-none"
         style={{ opacity: lensOpacity, zIndex: 3, borderRadius: '22.37%' }}
       />

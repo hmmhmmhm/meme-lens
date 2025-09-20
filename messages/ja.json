@@ -1,0 +1,21 @@
+{
+  "appTitle": "MemeLens",
+  "appDescription": "カメラレンズエフェクトでキャラクター画像を飾る",
+  "controls": "設定",
+  "uploadImageVideo": "画像/動画アップロード",
+  "lensOpacity": "レンズの透明度",
+  "zoom": "ズーム",
+  "language": "言語",
+  "switchToLight": "ライトモード",
+  "switchToDark": "ダークモード",
+  "reset": "リセット",
+  "resetPosition": "位置リセット",
+  "save": "保存",
+  "saveImage": "画像保存",
+  "animatedFileNote": "アニメーション ファイルは最初のフレームのみ保存されます",
+  "userCharacter": "ユーザーキャラクター",
+  "cameraCover": "カメラカバー",
+  "cameraLens": "カメラレンズ",
+  "selectLanguage": "言語選択",
+  "searchLanguage": "言語検索"
+}

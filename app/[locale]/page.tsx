@@ -3,12 +3,14 @@
 import React, { useState, useRef } from "react";
 import { CameraCanvas } from "./camera-canvas";
 import { ControlPanel } from "./control-panel";
-import { useImageHandler } from "../lib/hooks/use-image-handler";
-import { useTouchHandler } from "../lib/hooks/use-touch-handler";
-import { useZoomPrevention } from "../lib/hooks/use-zoom-prevention";
-import { downloadCanvas } from "../lib/utils/canvas-download";
+import { useImageHandler } from "../../lib/hooks/use-image-handler";
+import { useTouchHandler } from "../../lib/hooks/use-touch-handler";
+import { useZoomPrevention } from "../../lib/hooks/use-zoom-prevention";
+import { downloadCanvas } from "../../lib/utils/canvas-download";
+import { useTranslations } from 'next-intl';
 
 export default function Home() {
+  const t = useTranslations();
   const [lensOpacity, setLensOpacity] = useState(0.75);
   const [isDarkTheme, setIsDarkTheme] = useState(true);
   const canvasRef = useRef<HTMLDivElement>(null);
@@ -76,7 +78,7 @@ export default function Home() {
         <div
           className={`${cardBg} ${borderColor} border-b px-4 py-3 flex items-center justify-center`}
         >
-          <h1 className="text-lg font-semibold">Meme Lens</h1>
+          <h1 className="text-lg font-semibold">{t('appTitle')}</h1>
         </div>
 
         {/* Mobile Canvas */}
@@ -120,7 +122,7 @@ export default function Home() {
         <div
           className={`${cardBg} ${borderColor} border-b p-4 flex items-center justify-center`}
         >
-          <h1 className="text-xl font-semibold">Meme Lens</h1>
+          <h1 className="text-xl font-semibold">{t('appTitle')}</h1>
         </div>
 
         {/* Desktop Content */}

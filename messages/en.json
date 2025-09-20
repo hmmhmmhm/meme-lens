@@ -1,0 +1,21 @@
+{
+  "appTitle": "MemeLens",
+  "appDescription": "Decorate character images with camera lens effects",
+  "controls": "Controls",
+  "uploadImageVideo": "Upload Image/Video",
+  "lensOpacity": "Lens Opacity",
+  "zoom": "Zoom",
+  "language": "Language",
+  "switchToLight": "Light Mode",
+  "switchToDark": "Dark Mode",
+  "reset": "Reset",
+  "resetPosition": "Reset Position",
+  "save": "Save",
+  "saveImage": "Save Image",
+  "animatedFileNote": "Animated files will save first frame only",
+  "userCharacter": "User Character",
+  "cameraCover": "Camera Cover",
+  "cameraLens": "Camera Lens",
+  "selectLanguage": "Select Language",
+  "searchLanguage": "Search Language"
+}

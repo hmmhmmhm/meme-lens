@@ -1,0 +1,21 @@
+{
+  "appTitle": "MemeLens",
+  "appDescription": "카메라 렌즈 효과로 캐릭터 이미지를 꾸며보세요",
+  "controls": "설정",
+  "uploadImageVideo": "이미지/비디오 업로드",
+  "lensOpacity": "렌즈 투명도",
+  "zoom": "줌",
+  "language": "언어",
+  "switchToLight": "라이트 모드",
+  "switchToDark": "다크 모드",
+  "reset": "초기화",
+  "resetPosition": "위치 초기화",
+  "save": "저장",
+  "saveImage": "이미지 저장",
+  "animatedFileNote": "애니메이션 파일은 첫 번째 프레임만 저장됩니다",
+  "userCharacter": "사용자 캐릭터",
+  "cameraCover": "카메라 커버",
+  "cameraLens": "카메라 렌즈",
+  "selectLanguage": "언어 선택",
+  "searchLanguage": "언어 검색"
+}

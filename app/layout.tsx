@@ -1,41 +1,22 @@
-import type React from "react";
-import type { Metadata, Viewport } from "next";
-import "./globals.css";
-
-import { cn } from "@/lib/utils";
+import type { Metadata } from "next";
+import { routing } from "@/src/i18n/routing";
 
 export const metadata: Metadata = {
-  title: "MemeLens",
-  description: "MemeLens",
+  title: {
+    default: "MemeLens",
+    template: "%s | MemeLens",
+  },
+  description: "카메라 렌즈 효과로 캐릭터 이미지를 꾸며보세요",
 };
 
-export const viewport: Viewport = {
-  width: "device-width",
-  initialScale: 1,
-  maximumScale: 1,
-  userScalable: false,
-};
+export function generateStaticParams() {
+  return routing.locales.map((locale) => ({locale}));
+}
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
-  return (
-    <html lang="ko">
-      <head>
-        <meta
-          name="viewport"
-          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, shrink-to-fit=no"
-        />
-        <meta name="format-detection" content="telephone=no" />
-        <meta name="msapplication-tap-highlight" content="no" />
-      </head>
-      <body className={cn("antialiased")}>
-        <div className="flex min-h-screen flex-col">
-          <main className="flex-1">{children}</main>
-        </div>
-      </body>
-    </html>
-  );
+}) {
+  return children;
 }
