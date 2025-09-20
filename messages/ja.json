@@ -1,6 +1,8 @@
 {
   "appTitle": "MemeLens",
   "appDescription": "カメラレンズエフェクトでキャラクター画像を飾る",
+  "metaDescription": "カメラレンズエフェクトでキャラクター画像を飾る。無料オンライン画像エディター",
+  "metaKeywords": "ミーム, レンズ, カメラ, 写真, 編集, 画像, オンライン, 無料, キャラクター",
   "controls": "設定",
   "uploadImageVideo": "画像/動画アップロード",
   "lensOpacity": "レンズの透明度",

@@ -1,7 +1,7 @@
 import type React from "react";
 import type { Metadata, Viewport } from "next";
 import {NextIntlClientProvider} from 'next-intl';
-import {getMessages, setRequestLocale} from 'next-intl/server';
+import {getMessages, setRequestLocale, getTranslations} from 'next-intl/server';
 import {routing} from '@/src/i18n/routing';
 import "./globals.css";
 
@@ -16,49 +16,63 @@ export function generateStaticParams() {
   return routing.locales.map((locale) => ({locale}));
 }
 
-export const metadata: Metadata = {
-  title: {
-    default: "MemeLens",
-    template: "%s | MemeLens",
-  },
-  description: "카메라 렌즈 효과로 캐릭터 이미지를 꾸며보세요",
-  keywords: ["meme", "lens", "camera", "photo", "editor", "밈", "렌즈", "카메라", "사진", "편집", "ミーム", "レンズ", "カメラ", "写真", "編集"],
-  authors: [{ name: "MemeLens" }],
-  creator: "MemeLens",
-  publisher: "MemeLens",
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
+// 다국어 메타데이터 생성
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const {locale} = await params;
+  const t = await getTranslations({locale});
+  
+  // 로케일별 OpenGraph locale 매핑
+  const localeMap: Record<string, string> = {
+    'ko': 'ko_KR',
+    'en': 'en_US', 
+    'ja': 'ja_JP'
+  };
+
+  return {
+    title: {
+      default: t('appTitle'),
+      template: `%s | ${t('appTitle')}`,
+    },
+    description: t('metaDescription'),
+    keywords: t('metaKeywords').split(', '),
+    authors: [{ name: "MemeLens" }],
+    creator: "MemeLens",
+    publisher: "MemeLens",
+    robots: {
       index: true,
       follow: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-video-preview": -1,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+      },
     },
-  },
-  openGraph: {
-    type: "website",
-    locale: "ko_KR",
-    alternateLocale: ["en_US", "ja_JP"],
-    url: "https://meme-lens.com",
-    title: "MemeLens",
-    description: "카메라 렌즈 효과로 캐릭터 이미지를 꾸며보세요",
-    siteName: "MemeLens",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "MemeLens",
-    description: "카메라 렌즈 효과로 캐릭터 이미지를 꾸며보세요",
-  },
-  alternates: {
-    languages: {
-      "ko": "/ko",
-      "en": "/en", 
-      "ja": "/ja",
+    openGraph: {
+      type: "website",
+      locale: localeMap[locale] || 'ko_KR',
+      alternateLocale: Object.values(localeMap).filter(l => l !== localeMap[locale]),
+      url: `https://meme-lens.com${locale === routing.defaultLocale ? '' : `/${locale}`}`,
+      title: t('appTitle'),
+      description: t('metaDescription'),
+      siteName: t('appTitle'),
     },
-  },
-};
+    twitter: {
+      card: "summary_large_image",
+      title: t('appTitle'),
+      description: t('metaDescription'),
+    },
+    alternates: {
+      languages: {
+        "ko": "/ko",
+        "en": "/en", 
+        "ja": "/ja",
+        "x-default": "/ko",
+      },
+    },
+  };
+}
 
 export const viewport: Viewport = {
   width: "device-width",

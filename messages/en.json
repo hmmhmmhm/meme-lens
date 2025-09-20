@@ -1,6 +1,8 @@
 {
   "appTitle": "MemeLens",
   "appDescription": "Decorate character images with camera lens effects",
+  "metaDescription": "Decorate character images with camera lens effects. Free online image editor",
+  "metaKeywords": "meme, lens, camera, photo, editor, image, online, free, character",
   "controls": "Controls",
   "uploadImageVideo": "Upload Image/Video",
   "lensOpacity": "Lens Opacity",
