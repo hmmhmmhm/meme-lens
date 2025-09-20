@@ -1,7 +1,167 @@
 @import "tailwindcss";
+
+@theme {
+  /* 예시: 중립 회색(채도 ↓) */
+  --color-gray-50: oklch(0.98 0.002 250);
+  --color-gray-100: oklch(0.96 0.003 250);
+  --color-gray-200: oklch(0.92 0.004 250);
+  --color-gray-300: oklch(0.86 0.006 250);
+  --color-gray-400: oklch(0.74 0.009 250);
+  --color-gray-500: oklch(0.63 0.01 250);
+  --color-gray-600: oklch(0.52 0.01 250);
+  --color-gray-700: oklch(0.42 0.01 250);
+  --color-gray-800: oklch(0.33 0.009 250);
+  --color-gray-900: oklch(0.24 0.008 250);
+  --color-gray-950: oklch(0.17 0.007 250);
+}
+
 @import "tw-animate-css";
 
 * {
   text-wrap: balance;
   word-break: keep-all;
+}
+
+/* Monochrome slider styles */
+.slider-monochrome {
+  -webkit-appearance: none;
+  background: oklch(0.86 0.006 250);
+  border-radius: 8px;
+  height: 8px;
+}
+
+.slider-monochrome::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: oklch(0.42 0.01 250);
+  cursor: pointer;
+  border: 2px solid oklch(0.52 0.01 250);
+  transition: all 0.2s ease;
+}
+
+.slider-monochrome::-webkit-slider-thumb:hover {
+  background: oklch(0.33 0.009 250);
+  border-color: oklch(0.42 0.01 250);
+}
+
+.slider-monochrome::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: oklch(0.42 0.01 250);
+  cursor: pointer;
+  border: 2px solid oklch(0.52 0.01 250);
+  transition: all 0.2s ease;
+}
+
+.slider-monochrome::-moz-range-thumb:hover {
+  background: oklch(0.33 0.009 250);
+  border-color: oklch(0.42 0.01 250);
+}
+
+/* Light theme slider */
+.light .slider-monochrome {
+  background: oklch(0.92 0.004 250);
+}
+
+.light .slider-monochrome::-webkit-slider-thumb {
+  background: oklch(0.74 0.009 250);
+  border-color: oklch(0.86 0.006 250);
+}
+
+.light .slider-monochrome::-webkit-slider-thumb:hover {
+  background: oklch(0.52 0.01 250);
+  border-color: oklch(0.74 0.009 250);
+}
+
+.light .slider-monochrome::-moz-range-thumb {
+  background: oklch(0.74 0.009 250);
+  border-color: oklch(0.86 0.006 250);
+}
+
+.light .slider-monochrome::-moz-range-thumb:hover {
+  background: oklch(0.52 0.01 250);
+  border-color: oklch(0.74 0.009 250);
+}
+
+/* Prevent page zoom completely */
+* {
+  touch-action: pan-x pan-y !important;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+html {
+  -ms-touch-action: pan-x pan-y;
+  touch-action: pan-x pan-y;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  zoom: 1 !important;
+  -moz-transform: scale(1);
+  -webkit-transform: scale(1);
+  transform: scale(1);
+}
+
+body {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+  zoom: 1 !important;
+  -moz-transform: scale(1);
+  -webkit-transform: scale(1);
+  transform: scale(1);
+  overflow-x: hidden;
+}
+
+/* Canvas specific touch handling */
+.canvas-container {
+  touch-action: none !important;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  /* Completely prevent native zoom and touch behaviors */
+  zoom: 1 !important;
+  -webkit-transform: scale(1) !important;
+  -moz-transform: scale(1) !important;
+  transform: scale(1) !important;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-perspective: 1000;
+  perspective: 1000;
+  /* Additional Safari/Chrome zoom blocks */
+  -webkit-text-size-adjust: none !important;
+  -ms-text-size-adjust: none !important;
+}
+
+/* Additional Chrome/Safari zoom prevention */
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+  html {
+    -webkit-text-size-adjust: none !important;
+    -webkit-appearance: none;
+  }
+  
+  body {
+    -webkit-text-size-adjust: none !important;
+    -webkit-appearance: none;
+  }
+  
+  * {
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-perspective: 1000;
+    perspective: 1000;
+  }
 }
