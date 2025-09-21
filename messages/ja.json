@@ -19,5 +19,7 @@
   "cameraCover": "カメラカバー",
   "cameraLens": "カメラレンズ",
   "selectLanguage": "言語選択",
-  "searchLanguage": "言語検索"
+  "searchLanguage": "言語検索",
+  "exampleImages": "サンプル画像",
+  "selectExample": "サンプル選択"
 }

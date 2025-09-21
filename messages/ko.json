@@ -19,5 +19,7 @@
   "cameraCover": "카메라 커버",
   "cameraLens": "카메라 렌즈",
   "selectLanguage": "언어 선택",
-  "searchLanguage": "언어 검색"
+  "searchLanguage": "언어 검색",
+  "exampleImages": "예시 이미지",
+  "selectExample": "예시 선택"
 }

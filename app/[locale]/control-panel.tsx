@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import dynamic from 'next/dynamic';
 import { Download, Upload, RotateCcw, Sun, Moon, Globe } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import { ExampleGallery } from './components/example-gallery';
 
 // 언어 모달을 동적 import로 hydration mismatch 방지
 const LanguageModal = dynamic(
@@ -25,6 +26,8 @@ interface ControlPanelProps {
   onUploadClick: () => void;
   onReset: () => void;
   onDownload: () => void;
+  onExampleSelect: (imagePath: string) => void;
+  selectedExample: string | null;
   isMobile?: boolean;
 }
 
@@ -39,6 +42,8 @@ export function ControlPanel({
   onUploadClick,
   onReset,
   onDownload,
+  onExampleSelect,
+  selectedExample,
   isMobile = false,
 }: ControlPanelProps) {
   const t = useTranslations();
@@ -53,6 +58,13 @@ export function ControlPanel({
     return (
       <>
         <div className={`${cardBg} ${borderColor} border-t p-4 space-y-4`}>
+          {/* Example Gallery */}
+          <ExampleGallery
+            onSelectExample={onExampleSelect}
+            selectedExample={selectedExample}
+            isDarkTheme={isDarkTheme}
+          />
+          
           {/* Upload Button */}
           <div>
             <button
@@ -153,6 +165,15 @@ export function ControlPanel({
     <>
       <div className={`w-80 ${cardBg} ${borderColor} border-l p-6`}>
         <h2 className="text-lg font-semibold mb-6">{t('controls')}</h2>
+        
+        {/* Example Gallery */}
+        <div className="mb-8">
+          <ExampleGallery
+            onSelectExample={onExampleSelect}
+            selectedExample={selectedExample}
+            isDarkTheme={isDarkTheme}
+          />
+        </div>
         
         {/* Upload Button */}
         <div className="mb-8">

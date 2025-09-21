@@ -40,8 +40,10 @@ export default function Home() {
     isAnimatedFile,
     displayImage,
     downloadImage,
+    selectedExample,
     fileInputRef,
     handleImageUpload,
+    handleExampleSelect,
     resetImagePosition,
   } = useImageHandler();
 
@@ -130,6 +132,8 @@ export default function Home() {
           onUploadClick={() => fileInputRef.current?.click()}
           onReset={resetImagePosition}
           onDownload={handleDownload}
+          onExampleSelect={handleExampleSelect}
+          selectedExample={selectedExample}
           isMobile={true}
         />
       </div>
@@ -176,6 +180,8 @@ export default function Home() {
             onUploadClick={() => fileInputRef.current?.click()}
             onReset={resetImagePosition}
             onDownload={handleDownload}
+            onExampleSelect={handleExampleSelect}
+            selectedExample={selectedExample}
             isMobile={false}
           />
         </div>
