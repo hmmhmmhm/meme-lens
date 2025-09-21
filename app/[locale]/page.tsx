@@ -1,28 +1,38 @@
 "use client";
 
 import React, { useState, useRef } from "react";
-import dynamic from 'next/dynamic';
+import dynamic from "next/dynamic";
 import { useImageHandler } from "../../lib/hooks/use-image-handler";
 import { useTouchHandler } from "../../lib/hooks/use-touch-handler";
 import { useZoomPrevention } from "../../lib/hooks/use-zoom-prevention";
 import { downloadCanvas } from "../../lib/utils/canvas-download";
-import { useTranslations } from 'next-intl';
+import { useTranslations } from "next-intl";
 import NoSSR from "./components/no-ssr";
 
 // 동적 import로 hydration mismatch 방지
 const CameraCanvas = dynamic(
-  () => import("./camera-canvas").then((mod) => ({ default: mod.CameraCanvas })),
-  { 
+  () =>
+    import("./camera-canvas").then((mod) => ({ default: mod.CameraCanvas })),
+  {
     ssr: false,
-    loading: () => <div className="flex items-center justify-center min-h-[400px]">Loading canvas...</div>
+    loading: () => (
+      <div className="flex items-center justify-center min-h-[400px]">
+        Loading canvas...
+      </div>
+    ),
   }
 );
 
 const ControlPanel = dynamic(
-  () => import("./control-panel").then((mod) => ({ default: mod.ControlPanel })),
-  { 
+  () =>
+    import("./control-panel").then((mod) => ({ default: mod.ControlPanel })),
+  {
     ssr: false,
-    loading: () => <div className="flex items-center justify-center p-4">Loading controls...</div>
+    loading: () => (
+      <div className="flex items-center justify-center p-4">
+        Loading controls...
+      </div>
+    ),
   }
 );
 
@@ -92,65 +102,17 @@ export default function Home() {
           MozTransform: "scale(1)",
         }}
       >
-      {/* Mobile/Tablet Layout */}
-      <div className="flex flex-col lg:hidden">
-        {/* Mobile Header */}
-        <div
-          className={`${cardBg} ${borderColor} border-b px-4 py-3 flex items-center justify-center`}
-        >
-          <h1 className="text-lg font-semibold">{t('appTitle')}</h1>
-        </div>
+        {/* Mobile/Tablet Layout */}
+        <div className="flex flex-col lg:hidden">
+          {/* Mobile Header */}
+          <div
+            className={`${cardBg} ${borderColor} border-b px-4 py-3 flex items-center justify-center`}
+          >
+            <h1 className="text-lg font-semibold">{t("appTitle")}</h1>
+          </div>
 
-        {/* Mobile Canvas */}
-        <div className="flex-1 flex items-center justify-center p-4">
-          <CameraCanvas
-            displayImage={displayImage}
-            imagePosition={imagePosition}
-            imageScale={imageScale}
-            lensOpacity={lensOpacity}
-            isDarkTheme={isDarkTheme}
-            canvasRef={canvasRef}
-            onMouseDown={handleMouseDown}
-            onMouseMove={handleMouseMove}
-            onMouseUp={handleMouseUp}
-            onTouchStart={handleTouchStart}
-            onTouchMove={handleTouchMove}
-            onTouchEnd={handleTouchEnd}
-            size="min(90vw, 90vh, 400px)"
-          />
-        </div>
-
-        {/* Mobile Controls */}
-        <ControlPanel
-          lensOpacity={lensOpacity}
-          setLensOpacity={setLensOpacity}
-          imageScale={imageScale}
-          setImageScale={setImageScale}
-          isDarkTheme={isDarkTheme}
-          setIsDarkTheme={setIsDarkTheme}
-          isAnimatedFile={isAnimatedFile}
-          onUploadClick={() => fileInputRef.current?.click()}
-          onReset={resetImagePosition}
-          onDownload={handleDownload}
-          onExampleSelect={handleExampleSelect}
-          selectedExample={selectedExample}
-          isMobile={true}
-        />
-      </div>
-
-      {/* Desktop Layout */}
-      <div className="hidden lg:flex flex-col min-h-screen">
-        {/* Desktop Header */}
-        <div
-          className={`${cardBg} ${borderColor} border-b p-4 flex items-center justify-center`}
-        >
-          <h1 className="text-xl font-semibold">{t('appTitle')}</h1>
-        </div>
-
-        {/* Desktop Content */}
-        <div className="flex-1 flex">
-          {/* Canvas Area */}
-          <div className="flex-1 flex items-center justify-center p-8">
+          {/* Mobile Canvas */}
+          <div className="flex-1 flex items-center justify-center p-4">
             <CameraCanvas
               displayImage={displayImage}
               imagePosition={imagePosition}
@@ -164,11 +126,11 @@ export default function Home() {
               onTouchStart={handleTouchStart}
               onTouchMove={handleTouchMove}
               onTouchEnd={handleTouchEnd}
-              size="min(70vh, 600px)"
+              size="min(90vw, 90vh, 400px)"
             />
           </div>
 
-          {/* Desktop Controls */}
+          {/* Mobile Controls */}
           <ControlPanel
             lensOpacity={lensOpacity}
             setLensOpacity={setLensOpacity}
@@ -182,18 +144,73 @@ export default function Home() {
             onDownload={handleDownload}
             onExampleSelect={handleExampleSelect}
             selectedExample={selectedExample}
-            isMobile={false}
+            isMobile={true}
           />
         </div>
-      </div>
 
-      <input
-        ref={fileInputRef}
-        type="file"
-        accept="image/*,video/*"
-        onChange={handleImageUpload}
-        className="hidden"
-      />
+        {/* Desktop Layout */}
+        <div className="hidden lg:flex flex-col min-h-screen">
+          {/* Desktop Header */}
+          <div
+            className={`${cardBg} ${borderColor} border-b p-4 flex items-center justify-center gap-2`}
+          >
+            <div className="w-6 h-6">
+              <img
+                src="/logo.png"
+                alt="Meme Lens Logo"
+                className="inset-0 w-full h-full object-cover pointer-events-none"
+              />
+            </div>
+            <h1 className="text-xl font-semibold">{t("appTitle")}</h1>
+          </div>
+
+          {/* Desktop Content */}
+          <div className="flex-1 flex">
+            {/* Canvas Area */}
+            <div className="flex-1 flex items-center justify-center p-8">
+              <CameraCanvas
+                displayImage={displayImage}
+                imagePosition={imagePosition}
+                imageScale={imageScale}
+                lensOpacity={lensOpacity}
+                isDarkTheme={isDarkTheme}
+                canvasRef={canvasRef}
+                onMouseDown={handleMouseDown}
+                onMouseMove={handleMouseMove}
+                onMouseUp={handleMouseUp}
+                onTouchStart={handleTouchStart}
+                onTouchMove={handleTouchMove}
+                onTouchEnd={handleTouchEnd}
+                size="min(70vh, 600px)"
+              />
+            </div>
+
+            {/* Desktop Controls */}
+            <ControlPanel
+              lensOpacity={lensOpacity}
+              setLensOpacity={setLensOpacity}
+              imageScale={imageScale}
+              setImageScale={setImageScale}
+              isDarkTheme={isDarkTheme}
+              setIsDarkTheme={setIsDarkTheme}
+              isAnimatedFile={isAnimatedFile}
+              onUploadClick={() => fileInputRef.current?.click()}
+              onReset={resetImagePosition}
+              onDownload={handleDownload}
+              onExampleSelect={handleExampleSelect}
+              selectedExample={selectedExample}
+              isMobile={false}
+            />
+          </div>
+        </div>
+
+        <input
+          ref={fileInputRef}
+          type="file"
+          accept="image/*,video/*"
+          onChange={handleImageUpload}
+          className="hidden"
+        />
       </div>
     </NoSSR>
   );

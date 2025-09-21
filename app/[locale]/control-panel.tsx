@@ -1,17 +1,20 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import dynamic from 'next/dynamic';
-import { Download, Upload, RotateCcw, Sun, Moon, Globe } from 'lucide-react';
-import { useTranslations } from 'next-intl';
-import { ExampleGallery } from './components/example-gallery';
+import React, { useState } from "react";
+import dynamic from "next/dynamic";
+import { Download, Upload, RotateCcw, Sun, Moon, Globe } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { ExampleGallery } from "./components/example-gallery";
 
 // 언어 모달을 동적 import로 hydration mismatch 방지
 const LanguageModal = dynamic(
-  () => import('./components/language-modal').then((mod) => ({ default: mod.LanguageModal })),
-  { 
+  () =>
+    import("./components/language-modal").then((mod) => ({
+      default: mod.LanguageModal,
+    })),
+  {
     ssr: false,
-    loading: () => null
+    loading: () => null,
   }
 );
 
@@ -48,11 +51,15 @@ export function ControlPanel({
 }: ControlPanelProps) {
   const t = useTranslations();
   const [isLanguageModalOpen, setIsLanguageModalOpen] = useState(false);
-  
-  const cardBg = isDarkTheme ? 'bg-gray-800' : 'bg-white';
-  const borderColor = isDarkTheme ? 'border-gray-700' : 'border-gray-200';
 
-  const buttonStyle = `${isDarkTheme ? 'bg-gray-700 hover:bg-gray-600' : 'bg-gray-100 hover:bg-gray-200'} transition-colors`;
+  const cardBg = isDarkTheme ? "bg-gray-800" : "bg-white";
+  const borderColor = isDarkTheme ? "border-gray-700" : "border-gray-200";
+
+  const buttonStyle = `${
+    isDarkTheme
+      ? "bg-gray-700 hover:bg-gray-600"
+      : "bg-gray-100 hover:bg-gray-200"
+  } transition-colors`;
 
   if (isMobile) {
     return (
@@ -64,7 +71,7 @@ export function ControlPanel({
             selectedExample={selectedExample}
             isDarkTheme={isDarkTheme}
           />
-          
+
           {/* Upload Button */}
           <div>
             <button
@@ -72,13 +79,13 @@ export function ControlPanel({
               className={`w-full flex items-center justify-center gap-2 py-2 px-4 rounded ${buttonStyle}`}
             >
               <Upload size={16} />
-              {t('uploadImageVideo')}
+              {t("uploadImageVideo")}
             </button>
           </div>
 
           <div>
             <label className="block text-sm font-medium mb-2">
-              {t('lensOpacity')}: {Math.round(lensOpacity * 100)}%
+              {t("lensOpacity")}: {Math.round(lensOpacity * 100)}%
             </label>
             <input
               type="range"
@@ -90,10 +97,10 @@ export function ControlPanel({
               className="w-full h-2 bg-gray-300 rounded-lg appearance-none cursor-pointer slider-monochrome"
             />
           </div>
-          
+
           <div>
             <label className="block text-sm font-medium mb-2">
-              {t('zoom')}: {Math.round(imageScale * 100)}%
+              {t("zoom")}: {Math.round(imageScale * 100)}%
             </label>
             <input
               type="range"
@@ -113,7 +120,7 @@ export function ControlPanel({
               className={`w-full flex items-center justify-center gap-2 py-2 px-4 rounded ${buttonStyle}`}
             >
               <Globe size={16} />
-              {t('language')}
+              {t("language")}
             </button>
           </div>
 
@@ -124,7 +131,7 @@ export function ControlPanel({
               className={`w-full flex items-center justify-center gap-2 py-2 px-4 rounded ${buttonStyle}`}
             >
               {isDarkTheme ? <Sun size={16} /> : <Moon size={16} />}
-              {isDarkTheme ? t('switchToLight') : t('switchToDark')}
+              {isDarkTheme ? t("switchToLight") : t("switchToDark")}
             </button>
           </div>
 
@@ -134,24 +141,28 @@ export function ControlPanel({
               className={`flex-1 flex items-center justify-center gap-2 py-2 px-4 rounded ${buttonStyle}`}
             >
               <RotateCcw size={16} />
-              {t('reset')}
+              {t("reset")}
             </button>
             <button
               onClick={onDownload}
               className={`flex-1 flex items-center justify-center gap-2 py-2 px-4 rounded ${buttonStyle}`}
             >
               <Download size={16} />
-              {t('save')}
+              {t("save")}
             </button>
           </div>
-          
+
           {isAnimatedFile && (
-            <div className={`text-xs ${isDarkTheme ? 'text-gray-400' : 'text-gray-600'} text-center mt-2`}>
-              {t('animatedFileNote')}
+            <div
+              className={`text-xs ${
+                isDarkTheme ? "text-gray-400" : "text-gray-600"
+              } text-center mt-2`}
+            >
+              {t("animatedFileNote")}
             </div>
           )}
         </div>
-        
+
         <LanguageModal
           isOpen={isLanguageModalOpen}
           onClose={() => setIsLanguageModalOpen(false)}
@@ -164,8 +175,8 @@ export function ControlPanel({
   return (
     <>
       <div className={`w-80 ${cardBg} ${borderColor} border-l p-6`}>
-        <h2 className="text-lg font-semibold mb-6">{t('controls')}</h2>
-        
+        <h2 className="text-lg font-semibold mb-6">{t("controls")}</h2>
+
         {/* Example Gallery */}
         <div className="mb-8">
           <ExampleGallery
@@ -174,7 +185,7 @@ export function ControlPanel({
             isDarkTheme={isDarkTheme}
           />
         </div>
-        
+
         {/* Upload Button */}
         <div className="mb-8">
           <button
@@ -182,14 +193,14 @@ export function ControlPanel({
             className={`w-full flex items-center justify-center gap-2 py-2 px-4 rounded ${buttonStyle}`}
           >
             <Upload size={16} />
-            {t('uploadImageVideo')}
+            {t("uploadImageVideo")}
           </button>
         </div>
 
         {/* Lens Opacity Control */}
         <div className="mb-8">
           <label className="block text-sm font-medium mb-3">
-            {t('lensOpacity')}: {Math.round(lensOpacity * 100)}%
+            {t("lensOpacity")}: {Math.round(lensOpacity * 100)}%
           </label>
           <input
             type="range"
@@ -205,7 +216,7 @@ export function ControlPanel({
         {/* Zoom Control */}
         <div className="mb-8">
           <label className="block text-sm font-medium mb-3">
-            {t('zoom')}: {Math.round(imageScale * 100)}%
+            {t("zoom")}: {Math.round(imageScale * 100)}%
           </label>
           <input
             type="range"
@@ -225,7 +236,7 @@ export function ControlPanel({
             className={`w-full flex items-center justify-center gap-2 py-2 px-4 rounded ${buttonStyle}`}
           >
             <Globe size={16} />
-            {t('language')}
+            {t("language")}
           </button>
         </div>
 
@@ -236,7 +247,7 @@ export function ControlPanel({
             className={`w-full flex items-center justify-center gap-2 py-2 px-4 rounded ${buttonStyle}`}
           >
             {isDarkTheme ? <Sun size={16} /> : <Moon size={16} />}
-            {isDarkTheme ? t('switchToLight') : t('switchToDark')}
+            {isDarkTheme ? t("switchToLight") : t("switchToDark")}
           </button>
         </div>
 
@@ -247,7 +258,7 @@ export function ControlPanel({
             className={`w-full flex items-center justify-center gap-2 py-2 px-4 rounded ${buttonStyle}`}
           >
             <RotateCcw size={16} />
-            {t('resetPosition')}
+            {t("resetPosition")}
           </button>
         </div>
 
@@ -258,17 +269,21 @@ export function ControlPanel({
             className={`w-full flex items-center justify-center gap-2 py-2 px-4 rounded ${buttonStyle}`}
           >
             <Download size={16} />
-            {t('saveImage')}
+            {t("saveImage")}
           </button>
         </div>
 
         {isAnimatedFile && (
-          <div className={`text-xs ${isDarkTheme ? 'text-gray-400' : 'text-gray-600'} text-center mb-4`}>
-            {t('animatedFileNote')}
+          <div
+            className={`text-xs ${
+              isDarkTheme ? "text-gray-400" : "text-gray-600"
+            } text-center mb-4`}
+          >
+            {t("animatedFileNote")}
           </div>
         )}
       </div>
-      
+
       <LanguageModal
         isOpen={isLanguageModalOpen}
         onClose={() => setIsLanguageModalOpen(false)}
