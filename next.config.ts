@@ -11,6 +11,13 @@ const nextConfig: NextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
+  // hydration mismatch 문제 완화
+  experimental: {
+    optimizePackageImports: ['next-intl'],
+  },
+  // 정적 최적화 설정
+  trailingSlash: false,
+  reactStrictMode: false, // 개발 중에만 false로 설정
 };
 
 export default withNextIntl(nextConfig);

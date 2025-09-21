@@ -1,13 +1,30 @@
 "use client";
 
 import React, { useState, useRef } from "react";
-import { CameraCanvas } from "./camera-canvas";
-import { ControlPanel } from "./control-panel";
+import dynamic from 'next/dynamic';
 import { useImageHandler } from "../../lib/hooks/use-image-handler";
 import { useTouchHandler } from "../../lib/hooks/use-touch-handler";
 import { useZoomPrevention } from "../../lib/hooks/use-zoom-prevention";
 import { downloadCanvas } from "../../lib/utils/canvas-download";
 import { useTranslations } from 'next-intl';
+import NoSSR from "./components/no-ssr";
+
+// 동적 import로 hydration mismatch 방지
+const CameraCanvas = dynamic(
+  () => import("./camera-canvas").then((mod) => ({ default: mod.CameraCanvas })),
+  { 
+    ssr: false,
+    loading: () => <div className="flex items-center justify-center min-h-[400px]">Loading canvas...</div>
+  }
+);
+
+const ControlPanel = dynamic(
+  () => import("./control-panel").then((mod) => ({ default: mod.ControlPanel })),
+  { 
+    ssr: false,
+    loading: () => <div className="flex items-center justify-center p-4">Loading controls...</div>
+  }
+);
 
 export default function Home() {
   const t = useTranslations();
@@ -62,16 +79,17 @@ export default function Home() {
   const borderColor = isDarkTheme ? "border-gray-700" : "border-gray-200";
 
   return (
-    <div
-      className={`min-h-screen ${bgColor} ${textColor} ${themeClass} select-none`}
-      style={{
-        touchAction: "pan-x pan-y",
-        zoom: 1,
-        transform: "scale(1)",
-        WebkitTransform: "scale(1)",
-        MozTransform: "scale(1)",
-      }}
-    >
+    <NoSSR>
+      <div
+        className={`min-h-screen ${bgColor} ${textColor} ${themeClass} select-none`}
+        style={{
+          touchAction: "pan-x pan-y",
+          zoom: 1,
+          transform: "scale(1)",
+          WebkitTransform: "scale(1)",
+          MozTransform: "scale(1)",
+        }}
+      >
       {/* Mobile/Tablet Layout */}
       <div className="flex flex-col lg:hidden">
         {/* Mobile Header */}
@@ -170,6 +188,7 @@ export default function Home() {
         onChange={handleImageUpload}
         className="hidden"
       />
-    </div>
+      </div>
+    </NoSSR>
   );
 }

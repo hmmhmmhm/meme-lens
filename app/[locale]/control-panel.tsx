@@ -1,9 +1,18 @@
 'use client';
 
 import React, { useState } from 'react';
+import dynamic from 'next/dynamic';
 import { Download, Upload, RotateCcw, Sun, Moon, Globe } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { LanguageModal } from './components/language-modal';
+
+// 언어 모달을 동적 import로 hydration mismatch 방지
+const LanguageModal = dynamic(
+  () => import('./components/language-modal').then((mod) => ({ default: mod.LanguageModal })),
+  { 
+    ssr: false,
+    loading: () => null
+  }
+);
 
 interface ControlPanelProps {
   lensOpacity: number;

@@ -95,7 +95,7 @@ export default async function LocaleLayout({
   const messages = await getMessages();
 
   return (
-    <html lang={locale}>
+    <html lang={locale} suppressHydrationWarning>
       <head>
         <meta
           name="viewport"
@@ -108,7 +108,7 @@ export default async function LocaleLayout({
         <link rel="alternate" hrefLang="ja" href="/ja" />
         <link rel="alternate" hrefLang="x-default" href="/" />
       </head>
-      <body className={cn("antialiased")}>
+      <body className={cn("antialiased")} suppressHydrationWarning>
         <NextIntlClientProvider messages={messages}>
           <div className="flex min-h-screen flex-col">
             <main className="flex-1">{children}</main>
