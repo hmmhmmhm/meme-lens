@@ -14,16 +14,21 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: 🌳 Setup Node.js 23
+      - name: 🌳 Setup Node.js 23 & pnpm
         uses: actions/setup-node@v4
         with:
           node-version: 23
 
+      - name: 📦 Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: latest
+
       - name: 🧹 Install dependencies
-        run: npm ci
+        run: pnpm install --frozen-lockfile
 
       - name: 🌟 Build OpenNextJS Cloudflare
-        run: npm run build:cf
+        run: pnpm run build:cf
 
       - name: 🚀 Deploy to Cloudflare Workers
         uses: cloudflare/wrangler-action@v3
