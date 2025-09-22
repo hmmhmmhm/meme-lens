@@ -2,7 +2,7 @@ name: Deploy to Cloudflare Workers (Production)
 
 on:
   push:
-    branches: [production]
+    branches: [main]
 
 jobs:
   deploy:
