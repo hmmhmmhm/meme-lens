@@ -65,13 +65,6 @@ export function ControlPanel({
     return (
       <>
         <div className={`${cardBg} ${borderColor} border-t p-4 space-y-4`}>
-          {/* Example Gallery */}
-          <ExampleGallery
-            onSelectExample={onExampleSelect}
-            selectedExample={selectedExample}
-            isDarkTheme={isDarkTheme}
-          />
-
           {/* Upload Button */}
           <div>
             <button
@@ -161,6 +154,13 @@ export function ControlPanel({
               {t("animatedFileNote")}
             </div>
           )}
+
+          {/* Example Gallery - moved to bottom on mobile */}
+          <ExampleGallery
+            onSelectExample={onExampleSelect}
+            selectedExample={selectedExample}
+            isDarkTheme={isDarkTheme}
+          />
         </div>
 
         <LanguageModal
@@ -177,14 +177,6 @@ export function ControlPanel({
       <div className={`w-80 ${cardBg} ${borderColor} border-l p-6`}>
         <h2 className="text-lg font-semibold mb-6">{t("controls")}</h2>
 
-        {/* Example Gallery */}
-        <div className="mb-8">
-          <ExampleGallery
-            onSelectExample={onExampleSelect}
-            selectedExample={selectedExample}
-            isDarkTheme={isDarkTheme}
-          />
-        </div>
 
         {/* Upload Button */}
         <div className="mb-8">
