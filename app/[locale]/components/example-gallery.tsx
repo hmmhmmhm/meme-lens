@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { useTranslations } from 'next-intl';
-import { Check } from 'lucide-react';
+import { ExampleImageWithSkeleton } from './example-image-with-skeleton';
 
 interface ExampleImage {
   id: string;
@@ -35,31 +35,16 @@ export function ExampleGallery({ onSelectExample, selectedExample, isDarkTheme }
       <h3 className="text-sm font-medium mb-3">{t('exampleImages')}</h3>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
         {exampleImages.map((example) => (
-          <button
+          <ExampleImageWithSkeleton
             key={example.id}
+            src={example.path}
+            alt={example.alt}
             onClick={() => onSelectExample(example.path)}
-            className={`
-              relative aspect-square rounded-lg overflow-hidden border-2 transition-all
-              ${selectedExample === example.path 
-                ? 'border-blue-500 ring-2 ring-blue-200' 
-                : `${borderColor} ${hoverBg} hover:border-gray-400`
-              }
-            `}
-          >
-            <img
-              src={example.path}
-              alt={example.alt}
-              className="w-full h-full object-cover"
-              loading="lazy"
-            />
-            {selectedExample === example.path && (
-              <div className="absolute inset-0 bg-blue-500 bg-opacity-20 flex items-center justify-center">
-                <div className="bg-blue-500 rounded-full p-1">
-                  <Check size={16} className="text-white" />
-                </div>
-              </div>
-            )}
-          </button>
+            isSelected={selectedExample === example.path}
+            isDarkTheme={isDarkTheme}
+            borderColor={borderColor}
+            className="aspect-square rounded-lg border-2"
+          />
         ))}
       </div>
     </div>
