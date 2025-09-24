@@ -57,11 +57,20 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: t('appTitle'),
       description: t('metaDescription'),
       siteName: t('appTitle'),
+      images: [
+        {
+          url: `https://meme-lens.com${locale === routing.defaultLocale ? '' : `/${locale}`}/opengraph-image`,
+          width: 1200,
+          height: 630,
+          alt: t('appTitle'),
+        },
+      ],
     },
     twitter: {
       card: "summary_large_image",
       title: t('appTitle'),
       description: t('metaDescription'),
+      images: [`https://meme-lens.com${locale === routing.defaultLocale ? '' : `/${locale}`}/opengraph-image`],
     },
     alternates: {
       languages: {
