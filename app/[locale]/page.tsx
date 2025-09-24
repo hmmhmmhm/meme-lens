@@ -93,7 +93,7 @@ function ControlPanelLoadingSkeleton({ isDarkTheme, isMobile }: { isDarkTheme: b
 export default function Home() {
   const t = useTranslations();
   const [lensOpacity, setLensOpacity] = useState(0.75);
-  const [isDarkTheme, setIsDarkTheme] = useState(true);
+  const [isDarkTheme, setIsDarkTheme] = useState(false);
   const [canvasLoaded, setCanvasLoaded] = useState(false);
   const [controlsLoaded, setControlsLoaded] = useState(false);
   const canvasRef = useRef<HTMLDivElement>(null);
