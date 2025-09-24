@@ -1,18 +1,18 @@
 @import "tailwindcss";
 
 @theme {
-  /* 예시: 중립 회색(채도 ↓) */
-  --color-gray-50: oklch(0.98 0.002 250);
-  --color-gray-100: oklch(0.96 0.003 250);
-  --color-gray-200: oklch(0.92 0.004 250);
-  --color-gray-300: oklch(0.86 0.006 250);
-  --color-gray-400: oklch(0.74 0.009 250);
-  --color-gray-500: oklch(0.63 0.01 250);
-  --color-gray-600: oklch(0.52 0.01 250);
-  --color-gray-700: oklch(0.42 0.01 250);
-  --color-gray-800: oklch(0.33 0.009 250);
-  --color-gray-900: oklch(0.24 0.008 250);
-  --color-gray-950: oklch(0.17 0.007 250);
+  /* Dark zinc-like colors - much darker for better dark theme */
+  --color-gray-50: oklch(0.98 0.001 250);
+  --color-gray-100: oklch(0.95 0.002 250);
+  --color-gray-200: oklch(0.89 0.003 250);
+  --color-gray-300: oklch(0.81 0.004 250);
+  --color-gray-400: oklch(0.66 0.005 250);
+  --color-gray-500: oklch(0.52 0.006 250);
+  --color-gray-600: oklch(0.40 0.006 250);
+  --color-gray-700: oklch(0.28 0.005 250);
+  --color-gray-800: oklch(0.18 0.004 250);
+  --color-gray-900: oklch(0.12 0.003 250);
+  --color-gray-950: oklch(0.08 0.002 250);
 }
 
 @import "tw-animate-css";
@@ -22,10 +22,10 @@
   word-break: keep-all;
 }
 
-/* Monochrome slider styles */
+/* Monochrome slider styles - updated for darker theme */
 .slider-monochrome {
   -webkit-appearance: none;
-  background: oklch(0.86 0.006 250);
+  background: oklch(0.28 0.005 250);
   border-radius: 8px;
   height: 8px;
 }
@@ -36,55 +36,55 @@
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background: oklch(0.42 0.01 250);
+  background: oklch(0.52 0.006 250);
   cursor: pointer;
-  border: 2px solid oklch(0.52 0.01 250);
+  border: 2px solid oklch(0.40 0.006 250);
   transition: all 0.2s ease;
 }
 
 .slider-monochrome::-webkit-slider-thumb:hover {
-  background: oklch(0.33 0.009 250);
-  border-color: oklch(0.42 0.01 250);
+  background: oklch(0.66 0.005 250);
+  border-color: oklch(0.52 0.006 250);
 }
 
 .slider-monochrome::-moz-range-thumb {
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background: oklch(0.42 0.01 250);
+  background: oklch(0.52 0.006 250);
   cursor: pointer;
-  border: 2px solid oklch(0.52 0.01 250);
+  border: 2px solid oklch(0.40 0.006 250);
   transition: all 0.2s ease;
 }
 
 .slider-monochrome::-moz-range-thumb:hover {
-  background: oklch(0.33 0.009 250);
-  border-color: oklch(0.42 0.01 250);
+  background: oklch(0.66 0.005 250);
+  border-color: oklch(0.52 0.006 250);
 }
 
 /* Light theme slider */
 .light .slider-monochrome {
-  background: oklch(0.92 0.004 250);
+  background: oklch(0.89 0.003 250);
 }
 
 .light .slider-monochrome::-webkit-slider-thumb {
-  background: oklch(0.74 0.009 250);
-  border-color: oklch(0.86 0.006 250);
+  background: oklch(0.66 0.005 250);
+  border-color: oklch(0.81 0.004 250);
 }
 
 .light .slider-monochrome::-webkit-slider-thumb:hover {
-  background: oklch(0.52 0.01 250);
-  border-color: oklch(0.74 0.009 250);
+  background: oklch(0.52 0.006 250);
+  border-color: oklch(0.66 0.005 250);
 }
 
 .light .slider-monochrome::-moz-range-thumb {
-  background: oklch(0.74 0.009 250);
-  border-color: oklch(0.86 0.006 250);
+  background: oklch(0.66 0.005 250);
+  border-color: oklch(0.81 0.004 250);
 }
 
 .light .slider-monochrome::-moz-range-thumb:hover {
-  background: oklch(0.52 0.01 250);
-  border-color: oklch(0.74 0.009 250);
+  background: oklch(0.52 0.006 250);
+  border-color: oklch(0.66 0.005 250);
 }
 
 /* Prevent page zoom completely */
