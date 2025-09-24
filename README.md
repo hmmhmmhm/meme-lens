@@ -1,3 +1,7 @@
+<div align="center">
+  <img src="/public/og.png" alt="MemeLens" width="1200" height="630">
+</div>
+
 # MemeLens
 
 A web-based camera lens effect tool that allows users to overlay character images with realistic camera lens frames and effects.
@@ -37,17 +41,20 @@ Visit [https://meme-lens.com](https://meme-lens.com) to try the application.
 ### Installation
 
 1. Clone the repository:
+
 ```bash
 git clone https://github.com/your-username/meme-lens.git
 cd meme-lens
 ```
 
 2. Install dependencies:
+
 ```bash
 pnpm install
 ```
 
 3. Run the development server:
+
 ```bash
 pnpm dev
 ```
@@ -108,6 +115,7 @@ The application is optimized for deployment on Cloudflare Workers using OpenNext
 1. Configure your `wrangler.toml` file
 2. Set up environment variables in Cloudflare
 3. Run the deployment command:
+
 ```bash
 pnpm deploy
 ```
