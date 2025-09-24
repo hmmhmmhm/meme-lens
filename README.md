@@ -19,7 +19,7 @@ A web-based camera lens effect tool that allows users to overlay character image
 
 ## Live Demo
 
-Visit [https://meme-lens.hmmhmmhm.workers.dev](https://meme-lens.hmmhmmhm.workers.dev) to try the application.
+Visit [https://meme.aka.page](https://meme.aka.page) to try the application.
 
 ## Technology Stack
 

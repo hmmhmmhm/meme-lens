@@ -67,7 +67,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       siteName: t("appTitle"),
       images: [
         {
-          url: `https://meme-lens.hmmhmmhm.workers.dev/og.png`,
+          url: `https://meme.aka.page/og.png`,
           width: 1200,
           height: 630,
           alt: t("appTitle"),
@@ -78,7 +78,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       card: "summary_large_image",
       title: t("appTitle"),
       description: t("metaDescription"),
-      images: [`https://meme-lens.hmmhmmhm.workers.dev/og.png`],
+      images: [`https://meme.aka.page/og.png`],
     },
     alternates: {
       languages: {
