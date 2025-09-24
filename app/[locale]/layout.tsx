@@ -1,40 +1,44 @@
 import type React from "react";
 import type { Metadata, Viewport } from "next";
-import {NextIntlClientProvider} from 'next-intl';
-import {getMessages, setRequestLocale, getTranslations} from 'next-intl/server';
-import {routing} from '@/src/i18n/routing';
+import { NextIntlClientProvider } from "next-intl";
+import {
+  getMessages,
+  setRequestLocale,
+  getTranslations,
+} from "next-intl/server";
+import { routing } from "@/src/i18n/routing";
 import "./globals.css";
 
 import { cn } from "@/lib/utils";
 
 type Props = {
   children: React.ReactNode;
-  params: Promise<{locale: string}>;
+  params: Promise<{ locale: string }>;
 };
 
 export function generateStaticParams() {
-  return routing.locales.map((locale) => ({locale}));
+  return routing.locales.map((locale) => ({ locale }));
 }
 
 // 다국어 메타데이터 생성
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const {locale} = await params;
-  const t = await getTranslations({locale});
-  
+  const { locale } = await params;
+  const t = await getTranslations({ locale });
+
   // 로케일별 OpenGraph locale 매핑
   const localeMap: Record<string, string> = {
-    'ko': 'ko_KR',
-    'en': 'en_US', 
-    'ja': 'ja_JP'
+    ko: "ko_KR",
+    en: "en_US",
+    ja: "ja_JP",
   };
 
   return {
     title: {
-      default: t('appTitle'),
-      template: `%s | ${t('appTitle')}`,
+      default: t("appTitle"),
+      template: `%s | ${t("appTitle")}`,
     },
-    description: t('metaDescription'),
-    keywords: t('metaKeywords').split(', '),
+    description: t("metaDescription"),
+    keywords: t("metaKeywords").split(", "),
     authors: [{ name: "MemeLens" }],
     creator: "MemeLens",
     publisher: "MemeLens",
@@ -51,32 +55,36 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     },
     openGraph: {
       type: "website",
-      locale: localeMap[locale] || 'ko_KR',
-      alternateLocale: Object.values(localeMap).filter(l => l !== localeMap[locale]),
-      url: `https://meme-lens.com${locale === routing.defaultLocale ? '' : `/${locale}`}`,
-      title: t('appTitle'),
-      description: t('metaDescription'),
-      siteName: t('appTitle'),
+      locale: localeMap[locale] || "ko_KR",
+      alternateLocale: Object.values(localeMap).filter(
+        (l) => l !== localeMap[locale]
+      ),
+      url: `https://meme-lens.com${
+        locale === routing.defaultLocale ? "" : `/${locale}`
+      }`,
+      title: t("appTitle"),
+      description: t("metaDescription"),
+      siteName: t("appTitle"),
       images: [
         {
-          url: `https://meme-lens.com${locale === routing.defaultLocale ? '' : `/${locale}`}/opengraph-image`,
+          url: `https://meme-lens.hmmhmmhm.workers.dev/og.png`,
           width: 1200,
           height: 630,
-          alt: t('appTitle'),
+          alt: t("appTitle"),
         },
       ],
     },
     twitter: {
       card: "summary_large_image",
-      title: t('appTitle'),
-      description: t('metaDescription'),
-      images: [`https://meme-lens.com${locale === routing.defaultLocale ? '' : `/${locale}`}/opengraph-image`],
+      title: t("appTitle"),
+      description: t("metaDescription"),
+      images: [`https://meme-lens.hmmhmmhm.workers.dev/og.png`],
     },
     alternates: {
       languages: {
-        "ko": "/ko",
-        "en": "/en", 
-        "ja": "/ja",
+        ko: "/ko",
+        en: "/en",
+        ja: "/ja",
         "x-default": "/ko",
       },
     },
@@ -90,15 +98,12 @@ export const viewport: Viewport = {
   userScalable: false,
 };
 
-export default async function LocaleLayout({
-  children,
-  params
-}: Props) {
-  const {locale} = await params;
-  
+export default async function LocaleLayout({ children, params }: Props) {
+  const { locale } = await params;
+
   // Enable static rendering
   setRequestLocale(locale);
-  
+
   // Providing all messages to the client
   // side is the easiest way to get started
   const messages = await getMessages();
