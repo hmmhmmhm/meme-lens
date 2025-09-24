@@ -9,6 +9,7 @@ import { downloadCanvas } from "../../lib/utils/canvas-download";
 import { useTranslations } from "next-intl";
 import NoSSR from "./components/no-ssr";
 import { ExampleImageWithSkeleton } from "./components/example-image-with-skeleton";
+import { ImageSkeleton, SkeletonLoader } from "./components/skeleton-loader";
 
 // 동적 import로 hydration mismatch 방지
 const CameraCanvas = dynamic(
@@ -16,11 +17,7 @@ const CameraCanvas = dynamic(
     import("./camera-canvas").then((mod) => ({ default: mod.CameraCanvas })),
   {
     ssr: false,
-    loading: () => (
-      <div className="flex items-center justify-center min-h-[400px]">
-        Loading canvas...
-      </div>
-    ),
+    loading: () => null, // Will be handled by custom loading component
   }
 );
 
@@ -29,19 +26,88 @@ const ControlPanel = dynamic(
     import("./control-panel").then((mod) => ({ default: mod.ControlPanel })),
   {
     ssr: false,
-    loading: () => (
-      <div className="flex items-center justify-center p-4">
-        Loading controls...
-      </div>
-    ),
+    loading: () => null, // Will be handled by custom loading component
   }
 );
+
+// Canvas loading component with skeleton
+function CanvasLoadingSkeleton({ isDarkTheme, size }: { isDarkTheme: boolean; size: string }) {
+  return (
+    <div
+      style={{
+        width: size,
+        height: size,
+        borderRadius: "22.37%",
+      }}
+    >
+      <ImageSkeleton
+        aspectRatio="canvas"
+        size="100%"
+        isDarkTheme={isDarkTheme}
+        className="rounded-[22.37%]"
+      />
+    </div>
+  );
+}
+
+// Control panel loading skeleton
+function ControlPanelLoadingSkeleton({ isDarkTheme, isMobile }: { isDarkTheme: boolean; isMobile?: boolean }) {
+  if (isMobile) {
+    return (
+      <div className={`${isDarkTheme ? 'bg-gray-800' : 'bg-white'} ${isDarkTheme ? 'border-gray-700' : 'border-gray-200'} border-t p-4 space-y-4`}>
+        <SkeletonLoader height="48px" isDarkTheme={isDarkTheme} className="rounded" />
+        <SkeletonLoader height="20px" isDarkTheme={isDarkTheme} className="rounded" />
+        <SkeletonLoader height="8px" isDarkTheme={isDarkTheme} className="rounded-full" />
+        <SkeletonLoader height="20px" isDarkTheme={isDarkTheme} className="rounded" />
+        <SkeletonLoader height="8px" isDarkTheme={isDarkTheme} className="rounded-full" />
+        <SkeletonLoader height="48px" isDarkTheme={isDarkTheme} className="rounded" />
+        <SkeletonLoader height="48px" isDarkTheme={isDarkTheme} className="rounded" />
+        <div className="flex gap-2">
+          <SkeletonLoader height="48px" isDarkTheme={isDarkTheme} className="rounded flex-1" />
+          <SkeletonLoader height="48px" isDarkTheme={isDarkTheme} className="rounded flex-1" />
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className={`w-80 ${isDarkTheme ? 'bg-gray-800' : 'bg-white'} ${isDarkTheme ? 'border-gray-700' : 'border-gray-200'} border-l p-6 space-y-8`}>
+      <SkeletonLoader height="24px" width="120px" isDarkTheme={isDarkTheme} className="rounded" />
+      <SkeletonLoader height="48px" isDarkTheme={isDarkTheme} className="rounded" />
+      <div className="space-y-3">
+        <SkeletonLoader height="16px" width="80px" isDarkTheme={isDarkTheme} className="rounded" />
+        <SkeletonLoader height="8px" isDarkTheme={isDarkTheme} className="rounded-full" />
+      </div>
+      <div className="space-y-3">
+        <SkeletonLoader height="16px" width="60px" isDarkTheme={isDarkTheme} className="rounded" />
+        <SkeletonLoader height="8px" isDarkTheme={isDarkTheme} className="rounded-full" />
+      </div>
+      <SkeletonLoader height="48px" isDarkTheme={isDarkTheme} className="rounded" />
+      <SkeletonLoader height="48px" isDarkTheme={isDarkTheme} className="rounded" />
+      <SkeletonLoader height="48px" isDarkTheme={isDarkTheme} className="rounded" />
+      <SkeletonLoader height="48px" isDarkTheme={isDarkTheme} className="rounded" />
+    </div>
+  );
+}
 
 export default function Home() {
   const t = useTranslations();
   const [lensOpacity, setLensOpacity] = useState(0.75);
   const [isDarkTheme, setIsDarkTheme] = useState(true);
+  const [canvasLoaded, setCanvasLoaded] = useState(false);
+  const [controlsLoaded, setControlsLoaded] = useState(false);
   const canvasRef = useRef<HTMLDivElement>(null);
+
+  // Handle loading states
+  React.useEffect(() => {
+    // Simulate loading times
+    const canvasTimer = setTimeout(() => setCanvasLoaded(true), 100);
+    const controlsTimer = setTimeout(() => setControlsLoaded(true), 200);
+    return () => {
+      clearTimeout(canvasTimer);
+      clearTimeout(controlsTimer);
+    };
+  }, []);
 
   const {
     imagePosition,
@@ -121,39 +187,50 @@ export default function Home() {
 
           {/* Mobile Canvas */}
           <div className="flex-1 flex items-center justify-center p-4">
-            <CameraCanvas
-              displayImage={displayImage}
-              imagePosition={imagePosition}
-              imageScale={imageScale}
-              lensOpacity={lensOpacity}
-              isDarkTheme={isDarkTheme}
-              canvasRef={canvasRef}
-              onMouseDown={handleMouseDown}
-              onMouseMove={handleMouseMove}
-              onMouseUp={handleMouseUp}
-              onTouchStart={handleTouchStart}
-              onTouchMove={handleTouchMove}
-              onTouchEnd={handleTouchEnd}
-              size="min(90vw, 90vh, 400px)"
-            />
+            {canvasLoaded ? (
+              <CameraCanvas
+                displayImage={displayImage}
+                imagePosition={imagePosition}
+                imageScale={imageScale}
+                lensOpacity={lensOpacity}
+                isDarkTheme={isDarkTheme}
+                canvasRef={canvasRef}
+                onMouseDown={handleMouseDown}
+                onMouseMove={handleMouseMove}
+                onMouseUp={handleMouseUp}
+                onTouchStart={handleTouchStart}
+                onTouchMove={handleTouchMove}
+                onTouchEnd={handleTouchEnd}
+                size="min(90vw, 90vh, 400px)"
+              />
+            ) : (
+              <CanvasLoadingSkeleton
+                isDarkTheme={isDarkTheme}
+                size="min(90vw, 90vh, 400px)"
+              />
+            )}
           </div>
 
           {/* Mobile Controls */}
-          <ControlPanel
-            lensOpacity={lensOpacity}
-            setLensOpacity={setLensOpacity}
-            imageScale={imageScale}
-            setImageScale={setImageScale}
-            isDarkTheme={isDarkTheme}
-            setIsDarkTheme={setIsDarkTheme}
-            isAnimatedFile={isAnimatedFile}
-            onUploadClick={() => fileInputRef.current?.click()}
-            onReset={resetImagePosition}
-            onDownload={handleDownload}
-            onExampleSelect={handleExampleSelect}
-            selectedExample={selectedExample}
-            isMobile={true}
-          />
+          {controlsLoaded ? (
+            <ControlPanel
+              lensOpacity={lensOpacity}
+              setLensOpacity={setLensOpacity}
+              imageScale={imageScale}
+              setImageScale={setImageScale}
+              isDarkTheme={isDarkTheme}
+              setIsDarkTheme={setIsDarkTheme}
+              isAnimatedFile={isAnimatedFile}
+              onUploadClick={() => fileInputRef.current?.click()}
+              onReset={resetImagePosition}
+              onDownload={handleDownload}
+              onExampleSelect={handleExampleSelect}
+              selectedExample={selectedExample}
+              isMobile={true}
+            />
+          ) : (
+            <ControlPanelLoadingSkeleton isDarkTheme={isDarkTheme} isMobile={true} />
+          )}
         </div>
 
         {/* Desktop Layout */}
@@ -183,21 +260,28 @@ export default function Home() {
                   height: 'calc(100vh - 61px - max(80px, min(140px, 20vh)))'
                 }}
               >
-                <CameraCanvas
-                  displayImage={displayImage}
-                  imagePosition={imagePosition}
-                  imageScale={imageScale}
-                  lensOpacity={lensOpacity}
-                  isDarkTheme={isDarkTheme}
-                  canvasRef={canvasRef}
-                  onMouseDown={handleMouseDown}
-                  onMouseMove={handleMouseMove}
-                  onMouseUp={handleMouseUp}
-                  onTouchStart={handleTouchStart}
-                  onTouchMove={handleTouchMove}
-                  onTouchEnd={handleTouchEnd}
-                  size="min(calc(100vh - 61px - max(80px, min(140px, 20vh)) - 32px), min(calc(100vw - 320px - 32px), 500px))"
-                />
+                {canvasLoaded ? (
+                  <CameraCanvas
+                    displayImage={displayImage}
+                    imagePosition={imagePosition}
+                    imageScale={imageScale}
+                    lensOpacity={lensOpacity}
+                    isDarkTheme={isDarkTheme}
+                    canvasRef={canvasRef}
+                    onMouseDown={handleMouseDown}
+                    onMouseMove={handleMouseMove}
+                    onMouseUp={handleMouseUp}
+                    onTouchStart={handleTouchStart}
+                    onTouchMove={handleTouchMove}
+                    onTouchEnd={handleTouchEnd}
+                    size="min(calc(100vh - 61px - max(80px, min(140px, 20vh)) - 32px), min(calc(100vw - 320px - 32px), 500px))"
+                  />
+                ) : (
+                  <CanvasLoadingSkeleton
+                    isDarkTheme={isDarkTheme}
+                    size="min(calc(100vh - 61px - max(80px, min(140px, 20vh)) - 32px), min(calc(100vw - 320px - 32px), 500px))"
+                  />
+                )}
               </div>
 
               {/* Example Gallery Section - Fixed height that matches calculation above */}
@@ -254,21 +338,25 @@ export default function Home() {
             </div>
 
             {/* Desktop Controls */}
-            <ControlPanel
-              lensOpacity={lensOpacity}
-              setLensOpacity={setLensOpacity}
-              imageScale={imageScale}
-              setImageScale={setImageScale}
-              isDarkTheme={isDarkTheme}
-              setIsDarkTheme={setIsDarkTheme}
-              isAnimatedFile={isAnimatedFile}
-              onUploadClick={() => fileInputRef.current?.click()}
-              onReset={resetImagePosition}
-              onDownload={handleDownload}
-              onExampleSelect={handleExampleSelect}
-              selectedExample={selectedExample}
-              isMobile={false}
-            />
+            {controlsLoaded ? (
+              <ControlPanel
+                lensOpacity={lensOpacity}
+                setLensOpacity={setLensOpacity}
+                imageScale={imageScale}
+                setImageScale={setImageScale}
+                isDarkTheme={isDarkTheme}
+                setIsDarkTheme={setIsDarkTheme}
+                isAnimatedFile={isAnimatedFile}
+                onUploadClick={() => fileInputRef.current?.click()}
+                onReset={resetImagePosition}
+                onDownload={handleDownload}
+                onExampleSelect={handleExampleSelect}
+                selectedExample={selectedExample}
+                isMobile={false}
+              />
+            ) : (
+              <ControlPanelLoadingSkeleton isDarkTheme={isDarkTheme} isMobile={false} />
+            )}
           </div>
         </div>
 
