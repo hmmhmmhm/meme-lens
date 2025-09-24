@@ -40,7 +40,9 @@ export function ExampleImageWithSkeleton({
       className={`
         relative overflow-hidden border transition-all
         ${isSelected
-          ? 'border-blue-500 ring-1 ring-blue-200'
+          ? isDarkTheme
+            ? 'border-gray-300 ring-1 ring-gray-400'
+            : 'border-gray-700 ring-1 ring-gray-600'
           : `${borderColor} hover:border-gray-400`
         }
         ${isDarkTheme ? 'hover:bg-gray-700' : 'hover:bg-gray-100'}
@@ -74,20 +76,17 @@ export function ExampleImageWithSkeleton({
 
       {/* Selection indicator */}
       {isSelected && imageLoaded && (
-        <div className="absolute inset-0 bg-blue-500 bg-opacity-20 flex items-center justify-center">
-          <div
-            className="bg-blue-500 rounded-full"
-            style={{
-              padding: 'max(1px, min(2px, calc(100vh / 400)))'
-            }}
-          >
+        <div className="absolute top-1 right-1">
+          <div className={`rounded-full p-1 shadow-lg ${
+            isDarkTheme ? 'bg-white' : 'bg-gray-900'
+          }`}>
             <svg
-              className="text-white"
+              className={isDarkTheme ? 'text-gray-900' : 'text-white'}
               fill="currentColor"
               viewBox="0 0 20 20"
               style={{
-                width: 'max(8px, min(12px, calc(100vh / 60)))',
-                height: 'max(8px, min(12px, calc(100vh / 60)))'
+                width: 'max(10px, min(16px, calc(100vh / 50)))',
+                height: 'max(10px, min(16px, calc(100vh / 50)))'
               }}
             >
               <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
